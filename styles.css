@@ -1,13 +1,345 @@
-/* body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f5f5f5;
-    color: #222;
-} */
+:root {
+	--wine: #2B1420;
+	--wine-light: #3D1E2C;
+	--rose: #E38B93;
+	--gold: #C9972E;
+	--cream: #FFF8EF;
+	--cream-card: #FFFFFF;
+	--cocoa: #3A2318;
+	--cocoa-soft: #6B4A3A;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* cargar las tipografias de la carpeta fonts */
+@font-face {
+    font-family: "Work Sans";
+    src: url("fonts/WorkSans.ttf") format("woff");
+}
+
+@font-face {
+    font-family: "Space Mono";
+    src: url("fonts/SpaceMono.ttf") format("woff");
+}
+
+@font-face {
+    font-family: "Fraunces";
+    src: url("fonts/Fraunces.ttf") format("woff");
+}
+
+@font-face {
+    font-family: "Fraunces Italic";
+    src: url("fonts/FrauncesItalic.ttf") format("woff");
+}
+
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--cream);
+	color: var(--cocoa);
+	font-family: "Work Sans", sans-serif;
+	line-height: 1.5;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+img, svg {
+	display:block;
+	max-width: 100%;
+}
+
+/* ---------- HEADER ---------- */
 
 header {
-    background-color: #cc770888;
-    color: white;
-    text-align: center;
-    padding: 30px 20px;
+	position: sticky;
+	top: 0;
+	z-index: 20;
+	display:flex;
+	align-items:center;
+	justify-content: space-between;
+	padding: 14px clamp(20px, 5vw, 64px);
+	background: rgba(255,248,239,0.92);
+	backdrop-filter: blur(6px);
+	border-bottom: 1px solid rgba(58,35,24,0.1);
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 38px;
+}
+
+.brand-name {
+	font-family: "Fraunces Italic", serif;
+	font-weight: 600;
+	font-size: 2.2rem;
+	color: var(--wine);
+}
+
+nav ul {
+	display:flex;
+	gap: clamp(16px, 3vw, 34px);
+	list-style: none;
+}
+
+nav a {
+	font-size: 0.9rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--cocoa-soft);
+	transition: color 0.2s ease;
+	cursor: pointer;
+}
+
+nav a:hover, nav a:focus-visible {
+	color: var(--wine);
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+	position: relative;
+	background: var(--wine);
+	color: var(--cream);
+	padding: clamp(64px, 12vw, 120px) clamp(20px, 6vw, 80px) 120px;
+	overflow: hidden;
+}
+
+.hero-seal {
+	position: absolute;
+	top: -40px;
+	right: -30px;
+	width: 260px;
+	height: 260px;
+	opacity: 0.14;
+	transform: rotate(8deg);
+}
+
+.hero-inner {
+	position: relative;
+	max-width: 640px;
+}
+
+.eyebrow {
+	font-family: "Space Mono", monospace;
+	font-size: 0.78rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--rose);
+	margin-bottom: 18px;
+	display: block;
+}
+
+.hero h1 {
+	font-family: "Fraunces Italic", serif;
+	font-weight: 500;
+	font-size: clamp(2.4rem, 6vw, 4rem);
+	line-height: 1.08;
+	margin-bottom: 22px;
+}
+
+.hero p {
+	font-size: clamp(1rem, 1.6vw, 1.15rem);
+	color: #EFDCD0;
+	max-width: 46ch;
+	margin-bottom: 34px;
+}
+
+.btn {
+	display: inline-block;
+	font-family: "Work Sans", sans-serif;
+	background: var(--rose);
+	color: var(--wine);
+	font-weight: 600;
+	padding: 14px 30px;
+	border-radius: 999px;
+	font-size: 0.92rem;
+	letter-spacing: 0.02em;
+	transition: transform 0.2s ease, background 0.2s ease;
+	cursor: pointer;
+}
+
+.btn:hover, .btn:focus-visible {
+	background: var(--gold);
+	transform: translateY(-2px);
+}
+
+.scallop {
+	position: absolute;
+	bottom: -1px;
+	left: 0;
+	width: 100%;
+	height: 42px;
+	display: block;
+}
+
+/* ---------- CAKES SECTION ---------- */
+
+.cakes {
+	padding: clamp(50px, 8vw, 90px) clamp(20px, 6vw, 80px) clamp(80px, 10vw, 120px);
+}
+
+.section-head {
+	text-align: center;
+	max-width: 560px;
+	margin: 0 auto 52px;
+}
+
+.section-head span {
+	font-family: "Space Mono", monospace;
+	font-size: 0.75rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--gold);
+}
+
+.section-head h2 {
+	font-family: "Fraunces Italic", serif;
+	font-weight: 800;
+	font-size: clamp(1.8rem, 4vw, 2.5rem);
+	color: var(--wine);
+	margin-top: 10px;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 34px;
+	max-width: 1180px;
+	margin: 0 auto;
+}
+
+@media (max-width: 880px) {
+	.grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+@media (max-width: 560px) {
+	.grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.card {
+	background: var(--cream-card);
+	border-radius: 18px;
+	overflow: hidden;
+	box-shadow: 0 1px 2px rgba(58, 35, 24, 0.06);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 18px 30px rgba(58, 35, 24, 0.14);
+}
+
+.photo-wrap {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	background: linear-gradient(155deg, var(--tone-a), var(--tone-b));
+}
+
+/* Reemplaza este bloque por tu propia foto:
+	<img src="img/torta-chocolate.jpg" alt="Torta de chocolate"> */
+.photo-wrap img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: none; /* se activa sola al agregar una imagen real con src válido */
+}
+.photo-wrap img[src]:not([src=""]) {
+	display: block;
+}
+
+.photo-icon {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: 30%;
+}
+
+.drip {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 22px;
+}
+
+.card-body {
+	padding: 20px 22px 24px;
+}
+
+.card-body h3 {
+	font-family: "Fraunces", serif;
+	font-weight: 600;
+	font-size: 1.18rem;
+	color: var(--wine);
+	margin-bottom: 6px;
+}
+
+.card-body p {
+	font-size: 0.88rem;
+	color: var(--cocoa-soft);
+	margin-bottom: 14px;
+}
+
+.price {
+	display: inline-block;
+	font-family: "Space Mono", monospace;
+	font-size: 0.85rem;
+	background: var(--cream);
+	color: var(--wine);
+	padding: 5px 12px;
+	border-radius: 6px;
+	border: 1px dashed var(--gold);
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+	background: var(--wine);
+	color: #EFDCD0;
+	padding: 46px clamp(20px, 6vw, 80px);
+	text-align:center;
+}
+
+footer .brand-name {
+	color: var(--cream);
+}
+
+footer .ribbon {
+	font-family: "Fraunces Italic", serif;
+	font-weight: 600;
+	color: var(--rose);
+	margin: 4px 0 4px;
+	font-size: 1.6rem;
+}
+
+footer .details {
+	font-size: 0.85rem;
+	color: #C8AFA2;
+}
+
+.details:hover {
+	color: var(--cream);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	.card, .btn {
+		transition: none;
+	}
 }
