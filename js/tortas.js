@@ -21,13 +21,15 @@
 
 */
 
-// agrega todas las tortas que quieras :-O
+// TODO: al implementar el server, remplazar los datos fijos con un import a catalogo.mjs
+// porque la web no te deja importtar archivos locales por defecto
+// import { CatalogoTortas } from "./catalogo.mjs";
 const tortas = [
 	{
 		nombre: "Torta de Chocolate",
 		detalle: "Bizcocho húmedo con ganache oscuro y un toque de café.",
 		precio: 18000,
-		imagen: "https://via.placeholder.com/300x200?text=Chocolate",
+		imagen: null,
 		tonoA: "#5C3A2E",
 		tonoB: "#8C5A44",
 	},
@@ -35,7 +37,7 @@ const tortas = [
 		nombre: "Torta de Frutilla",
 		detalle: "Crema suave con frutillas frescas y bizcocho de vainilla.",
 		precio: 22000,
-		imagen: "https://via.placeholder.com/300x200?text=Frutilla",
+		imagen: null,
 		tonoA: "#B34A4A",
 		tonoB: "#D97A7A",
 	},
@@ -43,7 +45,7 @@ const tortas = [
 		nombre: "Torta de Limón",
 		detalle: "Merengue italiano y relleno de crema de limón con base crujiente.",
 		precio: 20000,
-		imagen: "https://via.placeholder.com/300x200?text=Limon",
+		imagen: null,
 		tonoA: "#C2B13B",
 		tonoB: "#E8D44D",
 	},

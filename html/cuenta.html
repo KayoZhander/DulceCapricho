@@ -1,13 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
 	<meta charset="utf-8">
-	<title>Dulce Capricho – Contacto</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dulce Capricho – Mi cuenta</title>
 	<link rel="stylesheet" href="../css/styles.css">
+	<link rel="stylesheet" href="../css/cuenta.css">
 </head>
 
 <body>
+
+	<main class="account-container">
+		<h1 class="account-title">Configuración de la Cuenta</h1>
+
+		<div class="account-grid">
+			<aside class="account-sidebar">
+				<div class="account-card cart-card">
+					<h2>Tu Carrito</h2>
+					<p>Revisa tus pedidos seleccionados antes de completar la compra.</p>
+					<a href="carrito.html" class="btn btn-cart">Ver carrito</a>
+				</div>
+				<div>
+					<button type="submit", class="btn", id="cerrar-sesion">Cerrar sesión</button>
+				</div>
+			</aside>
+
+			<section class="account-content">
+				<div class="account-card">
+					<h2>Datos de la Cuenta</h2>
+					<form id="form-cuenta" class="account-form">
+						<div class="form-group">
+							<label for="nombre">Nombre(s)</label>
+							<input type="text" id="pnombre" name="pnombre" placeholder="Primer nombre" required>
+							<input type="text" id="snombre" name="snombre" placeholder="Segundo nombre">
+							<label for="nombre">Apellidos</label>
+							<input type="text" id="apaterno" name="apaterno" placeholder="Apellido paterno", required>
+							<input type="text" id="amaterno" name="amaterno" placeholder="Apellido materno", required>
+						</div>
+
+						<div class="form-group">
+							<label for="email">Correo electrónico</label>
+							<input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+						</div>
+
+						<div class="form-group-row">
+							<div class="form-group">
+								<label for="telefono">Teléfono</label>
+								<input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678">
+							</div>
+							<div class="form-group">
+								<label for="fecha-nacimiento">Fecha de nacimiento</label>
+								<input type="date" id="fecha-nacimiento" name="fecha-nacimiento">
+							</div>
+						</div>
+
+						<hr class="form-divider">
+
+						<div class="form-group">
+							<label for="password">Nueva contraseña</label>
+							<input type="password" id="password" name="password" placeholder="Al menos 8 characteres">
+						</div>
+
+						<button type="submit" class="btn">Guardar cambios</button>
+					</form>
+				</div>
+
+				<div class="account-card danger-zone">
+					<h3>Eliminar cuenta</h3>
+					<p>Esta acción borrará de forma permanente tu perfil e historial de pedidos.</p>
+					<button type="button" class="btn btn-danger" id="btn-eliminar-cuenta">Eliminar mi cuenta</button>
+				</div>
+			</section>
+		</div>
+	</main>
+
 	<script src="../js/cuenta.js"></script>
 	<script src="../js/headerYFooter.js"></script>
 </body>
