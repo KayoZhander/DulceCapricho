@@ -18,22 +18,22 @@
 /* cargar las tipografias de la carpeta fonts */
 @font-face {
     font-family: "Work Sans";
-    src: url("fonts/WorkSans.ttf") format("woff");
+    src: url("../fonts/WorkSans.ttf") format("woff");
 }
 
 @font-face {
     font-family: "Space Mono";
-    src: url("fonts/SpaceMono.ttf") format("woff");
+    src: url("../fonts/SpaceMono.ttf") format("woff");
 }
 
 @font-face {
     font-family: "Fraunces";
-    src: url("fonts/Fraunces.ttf") format("woff");
+    src: url("../fonts/Fraunces.ttf") format("woff");
 }
 
 @font-face {
     font-family: "Fraunces Italic";
-    src: url("fonts/FrauncesItalic.ttf") format("woff");
+    src: url("../fonts/FrauncesItalic.ttf") format("woff");
 }
 
 
@@ -172,6 +172,10 @@ nav a:hover, nav a:focus-visible {
 .btn:hover, .btn:focus-visible {
 	background: var(--gold);
 	transform: translateY(-2px);
+}
+
+#pagina-cuenta {
+	color: var(--rose);
 }
 
 .scallop {
@@ -342,4 +346,141 @@ footer .details {
 	.card, .btn {
 		transition: none;
 	}
+}
+/* Definición de Fuentes Existentes (para asegurar uso en portafolio) */
+.fraunces-font {
+    font-family: 'Fraunces', serif; /* Asegúrate de que este nombre de fuente coincida con tu CSS */
+    font-weight: 400; /* O el peso que desees */
+}
+
+/* 1. Contenedor Grid Principal */
+.portafolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Columnas flexibles */
+    grid-auto-rows: 250px; /* Altura base para filas estándar */
+    gap: 20px; /* Espaciado entre tarjetas (similar a referencias) */
+    padding: 40px 2rem; /* Espaciado externo */
+    background-color: #fdf8f5; /* Fondo pastel existente en tu CSS */
+}
+
+/* 2. Estilos Base para las Tarjetas del Portafolio */
+.portafolio-item {
+    position: relative;
+    overflow: hidden;
+    background-color: #fff; /* Fondo blanco para las tarjetas */
+    border-radius: 4px; /* Bordes ligeramente suaves (opcional) */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sombra muy suave */
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+}
+
+.portafolio-item:hover {
+    transform: translateY(-3px); /* Efecto de levante */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra más pronunciada en hover */
+}
+
+/* Estilos de Imagen dentro de la tarjeta */
+.portafolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* La imagen llena la tarjeta sin deformarse */
+    /* transition: transform 0.5s ease; */
+}
+
+.portafolio-item:hover img {
+    transform: scale(1.05); /* Zoom suave en hover */
+}
+
+/* 3. Definición de tamaños especiales (Grid Spanning) */
+
+/* Grande (Portada - image_0.png) */
+.portafolio-item.grid-col-2 {
+    grid-column: span 2;
+}
+.portafolio-item.grid-row-2 {
+    grid-row: span 2;
+}
+
+/* Horizontal (referencia 2) */
+.portafolio-item.std-horizontal {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+/* Vertical (referencia 2) */
+.portafolio-item.std-vertical {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+/* Collage (referencia 3) */
+.portafolio-item.std-collage {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+/* 4. Estilos de Texto del Portafolio (Inspiración image_0.png) */
+.portafolio-text {
+    position: absolute;
+    padding: 1.5rem;
+    color: #4a3e3d; /* Color de texto existente */
+    width: 100%;
+    z-index: 10;
+}
+
+/* Texto superpuesto (image_0.png, image_2.png) */
+.portafolio-text.overlay-bottom {
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%);
+}
+
+.portafolio-text.overlay-top-right {
+    top: 0;
+    right: 0;
+    text-align: right;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%);
+}
+
+/* Títulos y Descripciones */
+.project-category {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.25rem;
+    color: #d86979; /* Color de acento de tu logo */
+}
+
+.project-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #4a3e3d;
+}
+
+.project-description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* 5. Responsive Design para la cuadrícula */
+@media (max-width: 768px) {
+    .portafolio-grid {
+        grid-template-columns: 1fr; /* Una columna en móviles */
+        grid-auto-rows: auto; /* Altura automática */
+    }
+
+    /* Reseteo de spans en móviles */
+    .portafolio-item.grid-col-2,
+    .portafolio-item.grid-row-2,
+    .portafolio-item.std-horizontal,
+    .portafolio-item.std-vertical,
+    .portafolio-item.std-horizontal-2,
+    .portafolio-item.std-collage {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    /* Altura mínima para tarjetas colapsadas */
+    .portafolio-item {
+        min-height: 250px;
+    }
 }

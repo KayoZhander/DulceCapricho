@@ -63,6 +63,12 @@ tortas.forEach(t => {
 	// crear tarjeta
 	const tarjeta = document.createElement("article");
 	tarjeta.classList.add("card");
+	tarjeta.addEventListener("click", () => {
+		const carro = JSON.parse(localStorage.getItem("carro") ?? "[]");
+		carro.push(t);
+		localStorage.setItem("carro", JSON.stringify(carro));
+		alert("Torta agregada");
+	});
 
 	// fondo
 	const fondoImagen = document.createElement("div");
