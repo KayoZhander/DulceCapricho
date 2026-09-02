@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const li = document.createElement("li");
 		const a = document.createElement("a");
 		a.id = item.id;
-		if (a.id === "pagina-cuenta" && localStorage.getItem("user")) {
+		if (a.id === "pagina-cuenta" && localStorage.getItem("sesion")) {
 			a.textContent = item.texto2;
 			a.addEventListener("click", () => {
 				redireccionarOMoverArriba(item.html2);

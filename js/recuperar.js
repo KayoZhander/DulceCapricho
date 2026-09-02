@@ -4,23 +4,22 @@ if (localStorage.getItem("sesion")) {
 }
 
 const formularioLogin = document.querySelector("#login-form");
-const inputPassword = document.querySelector("#password");
+const botonOlvideCorreo = document.querySelector("#login-links-olvide-correo");
 
 formularioLogin.addEventListener("submit", (event) => {
 	event.preventDefault();
 	const valores = Object.fromEntries(new FormData(event.target).entries());
 
-	if (valores.password.length < 8) {
-		alert("La contraseña debe tener al menos 8 characteres");
-		return;
-	}
+    if (!validarRut(valores.rut)) {
+        alert("El RUT ingresado no es valido");
+        return;
+    }
 
 	localStorage.setItem("sesion", JSON.stringify(valores));
 	window.location.href = "index.html";
 });
 
-const regexPassword = /[\s]+/g;
-
-inputPassword.addEventListener("input", (event) => {
-	event.target.value = event.target.value.replace(regexPassword, "");
+botonOlvideCorreo.addEventListener("click", (event) => {
+    event.preventDefault();
+    alert("ha ha");
 });

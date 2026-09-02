@@ -16,6 +16,54 @@
 		<div class="grid", id="tortas">
 		</div>
 	</section>
+<!---Personalizacion--->
+	<section class = "personalizar">
+		<div class="section-head">
+			<span>Hazlo a tu manera</span>
+			<h2>Personaliza tu torta</h2>
+		</div>
+
+		<form id="form-personalizar" class = "form-personalizar">
+			<div class ="campo">
+				<label for = "torta">Torta base </label>
+				<select id="torta" name = "torta" required>
+					<option value = ""> Selecciona una torta</option>
+					<option>Torta de chocolate</option>
+					<option>Torta de frutilla</option>
+					<option>Torta de limon</option>
+					<option>Torta de blueberry</option>
+				</select>
+			</div>
+
+			<div class="campo">
+				<label for ="tamano" Tamaño></label>
+					<select id="tamano" name ="tamano" required>
+						<option value="">Selecciona un tamaño</option>
+						<option> Pequeña (6-8 personas)</option>
+						<option> Mediana (10-14 personas)</option>
+						<option> Grande (16-20 personas)</option>
+					</select>
+				</div>
+
+			<div class="campo">
+				<label for ="bizcocho" Tipo de bizcocho></label>
+					<select id="bizcocho" name ="bizcocho" required>
+						<option value="">Selecciona un bizcocho</option>
+						<option> Chocolate</option>
+						<option> Vainilla</option>
+						<option> Red Velvet</option>
+						<option> Zanahoria</option>
+					</select>
+				</div>
+
+				<fieldset class="campo campo-fieldset">
+					<legend>Rellenos ( elige uno o mas)</legend>
+					<div class="opciones-check">
+						<label><input type = "checkbox" name = "relleno" value ="Manjar">Manjar</label>
+						<label><input type = "checkbox" name = "relleno" value ="Frutillas">Manjar</label>
+						<label><input type = "checkbox" name = "relleno" value ="Ganache">Manjar</label>
+						<label><input type = "checkbox" name = "relleno" value ="Crema pastelera">Manjar</label>
+					</div>
 
 	<script src="../js/tortas.js"></script>
 	<script src="../js/headerYFooter.js"></script>

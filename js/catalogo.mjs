@@ -65,6 +65,7 @@ export class Torta {
 			}
 			idGenerado++;
 		}
+		return idGenerado;
 	}
 }
 

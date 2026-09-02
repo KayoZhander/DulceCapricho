@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout y Pago - Pastelería Dulce Capricho</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+</head>
+<body>
+    <main class="container">
+        <h2>Finalizar Compra</h2>
+
+        <div class="checkout-grid">
+            <!-- Formulario de Datos y Pago -->
+            <form id="checkout-form" class="alt-bg checkout-form">
+
+                <!-- 1. Datos del Cliente -->
+                <h3>1. Datos Personales</h3>
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo *</label>
+                    <input type="text" id="nombre" required placeholder="Ej. María González">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico *</label>
+                        <input type="email" id="correo" required placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono *</label>
+                        <input type="tel" id="telefono" required placeholder="+56 9 1234 5678">
+                    </div>
+                </div>
+
+                <!-- 2. Tipo de Entrega -->
+                <h3>2. Tipo de Entrega</h3>
+                <div class="form-group">
+                    <label for="tipo-entrega">Modalidad *</label>
+                    <select id="tipo-entrega" required>
+                        <option value="retiro">Retiro en Tienda</option>
+                        <option value="despacho">Despacho a Domicilio</option>
+                    </select>
+                </div>
+
+                <div id="seccion-direccion" class="form-group" style="display: none;">
+                    <label for="direccion">Dirección de Envío *</label>
+                    <input type="text" id="direccion" placeholder="Calle, Número, Comuna">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fecha-entrega">Fecha *</label>
+                        <input type="date" id="fecha-entrega" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hora-entrega">Rango Horario *</label>
+                        <select id="hora-entrega" required>
+                            <option value="">Seleccione un Horario</option>
+                            <option value="10:00 - 12:00">10:00 - 12:00 hrs</option>
+                            <option value="12:00 - 14:00">12:00 - 14:00 hrs</option>
+                            <option value="15:00 - 18:00">15:00 - 18:00 hrs</option>
+                            <option value="19:00 - 20:00">19:00 - 20:00 hrs</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3. Método de Pago -->
+                <h3>3. Método de Pago</h3>
+                <div class="metodos-pago">
+                    <label class="metodo-card">
+                        <input type="radio" name="pago" value="webpay" checked>
+                        <span>Webpay / Tarjeta (Débito-Crédito)</span>
+                    </label>
+                    <label class="metodo-card">
+                        <input type="radio" name="pago" value="transferencia">
+                        <span>Transferencia Electrónica</span>
+                    </label>
+                </div>
+
+                <div id="info-transferencia" class="info-pago" style="display:none; margin-top: 10px;">
+                    <p><strong>Datos Banco:</strong> Banco Estado | Cuenta Corriente | Nº 12345678 | RUT: 76.543.210-K | pago@dulcecapricho.cl</p>
+                </div>
+
+                <button type="submit" class="btn-checkout">Simular Pago y Confirmar Pedido</button>
+            </form>
+
+            <!-- Resumen del Pedido -->
+            <div class="alt-bg checkout-resumen">
+                <h3>Resumen de la Compra</h3>
+                <ul id="resumen-items" class="resumen-lista"></ul>
+                <hr>
+                <div class="resumen-total">
+                    <span>Total a Pagar:</span>
+                    <strong id="resumen-total-precio">$0</strong>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/checkout.js"></script>
+    <script src="../js/headerYFooter.js"></script>
+</body>
+</html>

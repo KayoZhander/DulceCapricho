@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () =>{
+document.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelectorAll('.hero-slide');
     const btnPrev = document.getElementById('hero-btn-prev');
     const btnNext = document.getElementById('hero-btn-next');
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     const dots =dotsContainer.querySelectorAll('.dot');
 
     function actualizarCarrusel(){
-        slider.forEach((slide, i) => {
+        slides.forEach((slide, i) => {
             slide.classList.toggle('activo', i === indiceActual);
         });
         dots.forEach((dot,i) => {

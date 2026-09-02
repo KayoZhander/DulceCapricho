@@ -1,3 +1,5 @@
+@import url("tipografias.css");
+
 .login-section {
 	display: flex;
 	justify-content: center;
@@ -47,6 +49,7 @@
 .form-group input {
 	width: 100%;
 	padding: 0.8rem 1rem;
+	margin-bottom: 0.45rem;
 	border: 1px solid #ddd;
 	border-radius: 8px;
 	font-family: "Work Sans", sans-serif;
@@ -68,6 +71,7 @@
 	border-radius: 999px;
 	background: var(--rose);
 	color: var(--wine);
+	font-family: "Work Sans", sans-serif;
 	font-weight: 600;
 	font-size: 1rem;
 	cursor: pointer;
