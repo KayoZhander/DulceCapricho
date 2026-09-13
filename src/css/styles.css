@@ -1,3 +1,6 @@
+/* cargar las tipografiass */
+@import url("tipografias.css");
+
 :root {
 	--wine: #2B1420;
 	--wine-light: #3D1E2C;
@@ -14,9 +17,6 @@
 	margin: 0;
 	padding: 0;
 }
-
-/* cargar las tipografias de la carpeta fonts */
-@import url("tipografias.css");
 
 html {
 	scroll-behavior: smooth;

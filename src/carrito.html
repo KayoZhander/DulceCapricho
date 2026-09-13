@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Pastelería Dulce Capricho</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/carrito.css">
+</head>
+<body>
+    <main class="container">
+        <h2>Tu Carrito de Compras</h2>
+
+        <div class="carrito-grid">
+            <!-- Tabla / Lista de Productos -->
+            <div class="carrito-items-container alt-bg">
+                <table class="tabla-carrito">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="carrito-tabla-body">
+                        <!-- Se llena dinámicamente con JavaScript -->
+                    </tbody>
+                </table>
+                <div id="carrito-vacio-msg" class="vacio-mensaje" style="display: none;">
+                    <p>Tu carrito está vacío actualmente. ¡Revisa nuestro catálogo!</p>
+                    <a href="tortas.html" class="btn-primary">Ver Productos</a>
+                </div>
+            </div>
+
+            <!-- Resumen y Controles de Compra -->
+            <div class="carrito-resumen alt-bg">
+                <h3>Resumen del Pedido</h3>
+                <div class="resumen-linea">
+                    <span>Cantidad de ítems:</span>
+                    <strong id="resumen-cant-items">0</strong>
+                </div>
+                <div class="resumen-linea">
+                    <span>Subtotal:</span>
+                    <strong id="resumen-subtotal">$0</strong>
+                </div>
+                <hr>
+                <div class="resumen-linea total">
+                    <span>Total estimado:</span>
+                    <strong id="resumen-total">$0</strong>
+                </div>
+
+                <div class="resumen-acciones">
+                    <a href="checkout.html" id="btn-proceder-pago" class="btn-checkout">Proceder al Pago</a>
+                    <button id="btn-vaciar-carrito" class="btn-secundario">Vaciar Carrito</button>
+                    <a href="tortas.html" class="enlace-seguir-comprando">← Seguir Comprando</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="/js/carrito.js"></script>
+    <script src="/js/headerYFooter.js"></script>
+</body>
+</html>

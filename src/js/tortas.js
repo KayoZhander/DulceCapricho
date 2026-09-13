@@ -23,45 +23,11 @@
 
 // TODO: al implementar el server, remplazar los datos fijos con un import a catalogo.mjs
 // porque la web no te deja importtar archivos locales por defecto
-// import { CatalogoTortas } from "./catalogo.mjs";
-const tortas = [
-	{
-		nombre: "Torta de Chocolate",
-		detalle: "Bizcocho húmedo con ganache oscuro y un toque de café.",
-		precio: 18000,
-		imagen: null,
-		tonoA: "#5C3A2E",
-		tonoB: "#8C5A44",
-	},
-	{
-		nombre: "Torta de Frutilla",
-		detalle: "Crema suave con frutillas frescas y bizcocho de vainilla.",
-		precio: 22000,
-		imagen: null,
-		tonoA: "#B34A4A",
-		tonoB: "#D97A7A",
-	},
-	{
-		nombre: "Torta de Limón",
-		detalle: "Merengue italiano y relleno de crema de limón con base crujiente.",
-		precio: 20000,
-		imagen: null,
-		tonoA: "#C2B13B",
-		tonoB: "#E8D44D",
-	},
-	{
-		nombre: "Torta de Blueberry",
-		detalle: "sjdfkjasl",
-		precio: 99999,
-		imagen: null,
-		tonoA: "#1e3f97",
-		tonoB: "#6f41d8"
-	}
-];
+import { CatalogoTortas } from "./catalogo.mjs";
 
 const listaTortas = document.querySelector("#tortas");
 
-tortas.forEach(t => {
+CatalogoTortas.listaTortas().forEach((t) => {
 	// crear tarjeta
 	const tarjeta = document.createElement("article");
 	tarjeta.classList.add("card");
@@ -75,13 +41,13 @@ tortas.forEach(t => {
 	// fondo
 	const fondoImagen = document.createElement("div");
 	fondoImagen.classList.add("photo-wrap");
-	fondoImagen.style.setProperty("--tone-a", t.tonoA);
-	fondoImagen.style.setProperty("--tone-b", t.tonoB);
+	fondoImagen.style.setProperty("--tone-a", t.getTonoA());
+	fondoImagen.style.setProperty("--tone-b", t.getTonoB());
 
 	// imagen
 	const imagen = document.createElement("img");
-	imagen.src = t.imagen;
-	imagen.alt = t.nombre;
+	imagen.src = t.getImagen();
+	imagen.alt = t.getNombre();
 
 	// agregar imagen al contenedor
 	fondoImagen.appendChild(imagen);
@@ -91,14 +57,14 @@ tortas.forEach(t => {
 	cuerpoTarjeta.classList.add("card-body");
 
 	const titulo = document.createElement("h3");
-	titulo.textContent = t.nombre;
+	titulo.textContent = t.getNombre();
 
 	const descripcion = document.createElement("p");
-	descripcion.textContent = t.detalle;
+	descripcion.textContent = t.getDetalle();
 
 	const precio = document.createElement("span");
 	precio.classList.add("price");
-	precio.textContent = `\$${t.precio.toLocaleString()}`;
+	precio.textContent = `\$${t.getPrecio().toLocaleString()}`;
 
 	cuerpoTarjeta.append(titulo, descripcion, precio);
 

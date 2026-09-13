@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     mensajeEstado.className = 'form-mensaje';
     form.appendChild(mensajeEstado);
 
-    form.addEventListener('submit',(e)=> {
+    form.addEventListener('submit', (e)=> {
         e.preventDefault();
 
         const torta = document.getElementById('torta').value;

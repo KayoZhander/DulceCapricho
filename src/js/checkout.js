@@ -74,6 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`¡Pedido Confirmado! \n\nGracias por tu compra, ${cliente}.\nModalidad: ${tipoEntrega}\nFecha programada: ${fecha} (${hora})\n\n${mensajeMetodo}`);
 
         localStorage.removeItem('carrito_dulce_capricho');
-        window.location.href = 'index.html';
+        window.location.href = '/index.html';
     });
 });

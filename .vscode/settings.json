@@ -1,16 +1,15 @@
 {
 	"deno.enable": true,
-	"liveServer.settings.root": "/",
-	"liveServer.settings.port": 8081,
+	"liveServer.settings.port": 5501,
+	"liveServer.settings.root": "/src",
 	"liveServer.settings.mount": [
-		["/", "./html/index.html"],
-		["/inicio", "./html/index.html"],
-		["/catalogo", "./html/tortas.html"],
-		["/contacto", "./html/contacto.html"],
-		["/cuenta", "./html/cuenta.html"],
-		["/login", "./html/login.html"],
-		["/registrar", "./html/registrar.html"],
-		["/recuperar", "./html/recuperar.html"],
-		["/carro", "./html/carrito.html"]
+		["/", "/index.html"],
+		["/catalogo", "/tortas.html"],
+		["/contacto", "/contacto.html"],
+		["/cuenta", "/cuenta.html"],
+		["/login", "/login.html"],
+		["/registrar", "/registrar.html"],
+		["/recuperar", "/recuperar.html"],
+		["/carro", "/carrito.html"]
 	]
 }

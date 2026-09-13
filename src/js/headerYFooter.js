@@ -1,28 +1,28 @@
 const navItems = [
 	{
 		id: "pagina-inicio",
-		html: "index.html",
+		html: "/index.html",
 		texto: "Inicio"
 	},
 	{
 		id: "pagina-tortas",
-		html: "tortas.html",
+		html: "/tortas.html",
 		texto: "Tortas"
 	},
 	{
 		id: "pagina-contacto",
-		html: "contacto.html",
+		html: "/contacto.html",
 		texto: "Contacto"
 	},
 	{
 		id: "pagina-carrito",
-		html: "carrito.html",
+		html: "/carrito.html",
 		texto: "Mi carro"
 	},
 	{
 		id: "pagina-cuenta",
-		html: "login.html",
-		html2: "cuenta.html",
+		html: "/login.html",
+		html2: "/cuenta.html",
 		texto: "Iniciar sesión",
 		texto2: "Mi cuenta"
 	}
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Logo image
 	const logo = document.createElement("img");
-	logo.src = "../images/logo.webp";
+	logo.src = "/images/logo.webp";
 	logo.width = 64;
 	logo.height = 64;
 
