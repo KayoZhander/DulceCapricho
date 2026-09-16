@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Dulce Capricho – Recuperar Cuenta</title>
+	<link rel="stylesheet" href="/css/styles.css">
+	<link rel="stylesheet" href="/css/login.css">
+	<link rel="stylesheet" href="/css/gmail.css">
+</head>
+<body>
+    <section class="login-section">
+        <div class="login-card">
+            <h2>Recuperar cuenta</h2>
+
+            <!-- PASO 1: Formulario para ingresar el correo -->
+            <form id="form-recuperar">
+                <p class="subtitle">Ingresa tu correo registrado para enviarte un código de verificación.</p>
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <button type="submit" class="login-btn">Enviar código</button>
+            </form>
+
+            <!-- PASO 2: Formulario para ingresar el código recibido (oculto al inicio) -->
+            <form id="form-codigo" style="display: none;">
+                <p class="subtitle">Hemos enviado un correo simulado. Revisa la bandeja de Gmail que aparece abajo e ingresa el código:</p>
+                <div class="form-group">
+                    <label for="input-codigo">Código de 6 dígitos</label>
+                    <input type="text" id="input-codigo" maxlength="6" placeholder="123456" required autocomplete="off">
+                </div>
+                <button type="submit" class="login-btn">Verificar e ingresar</button>
+            </form>
+
+            <div class="login-links">
+                <a href="login.html">Volver al inicio de sesión</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Widget flotante simulador de Gmail -->
+    <div id="modal-gmail" class="gmail-modal" style="display: none;">
+        <div class="gmail-header">
+            <div>
+                <span class="gmail-logo">M</span>
+                <span>Gmail (Bandeja de Entrada)</span>
+            </div>
+            <button id="cerrar-modal" class="gmail-close">&times;</button>
+        </div>
+        <div class="gmail-body">
+            <div class="gmail-email-item">
+                <div class="gmail-sender">Dulce Capricho &lt;no-reply@dulcecapricho.cl&gt;</div>
+                <div class="gmail-subject">Código de recuperación de cuenta</div>
+                <div class="gmail-content">
+                    <p>Hola,</p>
+                    <p>Solicitaste restablecer el acceso a tu cuenta en <strong>Dulce Capricho</strong>.</p>
+                    <p>Tu código de confirmación es:</p>
+                    <div class="gmail-code-box"><strong id="codigo-generado">------</strong></div>
+                    <p><small>Usa este código en la pantalla de recuperación.</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script type="module" src="/js/recuperar.js"></script>
+	<script src="/js/headerYFooter.js"></script>
+</body>
+</html>

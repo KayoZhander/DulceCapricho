@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<title>Gmail</title>
+	<link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+	<section>
+		<div class="recuperar-container">
+			<h2>Recuperar Contraseña</h2>
+			<form id="form-recuperar">
+				<label for="correo-recuperar">Ingresa tu correo registrado:</label>
+				<input type="email" id="correo-recuperar" required placeholder="correo@ejemplo.com">
+				<button type="submit" class="btn-primary">Enviar Código de Verificación</button>
+			</form>
+
+			<form id="form-codigo" style="display: none; margin-top: 20px;">
+				<h3>Ingresa el Código</h3>
+				<p>Revisa la ventana simulada de Gmail e ingresa el código recibido:</p>
+				<input type="text" id="input-codigo" required placeholder="Ej: 482910" maxlength="6">
+				<button type="submit" class="btn-checkout">Validar Código y Entrar</button>
+			</form>
+		</div>
+
+		<div id="modal-gmail" class="gmail-modal" style="display: none;">
+			<div class="gmail-header">
+				<span class="gmail-logo">M</span>
+				<span>Simulador de Gmail - Bandeja de Entrada</span>
+				<button id="cerrar-modal" class="gmail-close">&times;</button>
+			</div>
+			<div class="gmail-body">
+				<div class="gmail-email-item">
+					<div class="gmail-sender">Dulce Capricho &lt;no-reply@dulcecapricho.cl&gt;</div>
+					<div class="gmail-subject">Código de Seguridad para Restablecer Tu Cuenta</div>
+					<div class="gmail-content">
+						<p>Hola,</p>
+						<p>Hemos recibido una solicitud para recuperar tu cuenta en Pastelería Dulce Capricho.</p>
+						<p>Tu código de confirmación es:</p>
+						<div class="gmail-code-box"><strong id="codigo-generado">------</strong></div>
+						<p><small>Si no solicitaste este cambio, puedes ignorar este mensaje.</small></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
