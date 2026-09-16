@@ -1,31 +1,54 @@
-// redireccionar a la pagina cuenta si ya inicío sesión
-if (localStorage.getItem("sesion")) {
-	window.location.href = "/cuenta.html"
+const sesionGuardada = localStorage.getItem("sesion");
+if (sesionGuardada) {
+	const usuarioSesion = JSON.parse(sesionGuardada);
+	if (usuarioSesion?.rol === "admin") {
+		window.location.href = "/tortas.html?admin=1";
+	} else {
+		window.location.href = "/cuenta.html";
+	}
 }
 
-import { Usuario, RegistroUsuarios } from "./usuarios.mjs";
+import { RegistroUsuarios, Usuario } from "./usuarios.mjs";
 
 const formularioLogin = document.querySelector("#login-form");
 const inputPassword = document.querySelector("#password");
+const btnTogglePassword = document.querySelector("#toggle-password");
 
-formularioLogin.addEventListener("submit", async (event) => {
+btnTogglePassword.addEventListener("click", (event) => {
+	event.preventDefault();
+	if (inputPassword.type === "password") {
+		inputPassword.type = "text";
+		btnTogglePassword.textContent = "Ocultar contraseña";
+	} else {
+		inputPassword.type = "password";
+		btnTogglePassword.textContent = "Mostrar contraseña";
+	}
+});
+
+formularioLogin?.addEventListener("submit", async (event) => {
 	event.preventDefault();
 	const valores = Object.fromEntries(new FormData(event.target).entries());
-	const usuario = RegistroUsuarios.obtenerUsuarioPorCorreo(valores.email);
+	let usuario = RegistroUsuarios.obtenerUsuarioPorCorreo(valores.email);
 
-	// await usuario.validarPassword(valores.password);
-	if (!usuario || !(await usuario?.validarPassword(valores.password))) {
+	if (!usuario && valores.email?.trim().toLowerCase() === "admin@dulcecapricho.com" && valores.password === "admin123") {
+		usuario = await Usuario.crearAdminSiNoExiste();
+	}
+
+	if (!usuario || !(await usuario.validarPassword(valores.password))) {
 		alert("Correo o contraseña incorrectos.");
 		return;
 	}
 
-	localStorage.setItem("sesion", JSON.stringify(usuario));
-	window.location.href = "/index.html";
+	localStorage.setItem("sesion", JSON.stringify(usuario.toJSON()));
+	if (usuario.getRol() === "admin") {
+		window.location.href = "/tortas.html?admin=1";
+		return;
+	}
+	window.location.href = "/cuenta.html";
 });
 
-// que la contraseña no contenga espacios ni tildes
 const regexPassword = /[^\w\p{P}\p{S}]+/gu;
 
-inputPassword.addEventListener("input", (event) => {
+inputPassword?.addEventListener("input", (event) => {
 	event.target.value = event.target.value.replace(regexPassword, "");
 });

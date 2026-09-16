@@ -103,6 +103,15 @@ nav a:hover, nav a:focus-visible {
 	transition: opacity 0.8s ease-in-out;
 }
 
+.hero-slide img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
 .hero-slide.activo{
 	opacity:1;
 }
@@ -412,6 +421,11 @@ footer .details {
     /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
 }
 
+.portafolio-item.ajuste-arriba img,
+img.ajuste-arriba {
+	object-position: top;
+}
+
 .portafolio-item:hover {
     transform: translateY(-3px); /* Efecto de levante */
     box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra más pronunciada en hover */
@@ -587,4 +601,52 @@ footer .details {
 	background: #C9972E;
 	color: #f5b5b5;
 	border: 1px solid #E38B93;
+}
+
+.personalizar{
+	max-width: 640px;
+	margin: 0 auto;
+	padding:clamp(50px, 8vw, 90px) clamp(20px,6vw,40px);
+}
+
+.form-personalizar{
+	display:flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.form-personalizar select,
+.form-personalizartextarea{
+	padding:10px;
+	border:1px sokd rgba(58,35,24,0.2);
+	border-radius:6px;
+	font-family: inherit;
+	background:var(--cream-card);
+}
+
+.campo-fieldset {
+	border: 1px solid rgba(58,35,24,0.15);
+	border-radius:8px;
+	padding: 14px 16px;
+}
+
+.campo-fieldset legend{
+	font-weight: 600;
+	padding: 0 6px;
+}
+
+.opciones-check{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 8px;
+}
+
+.opciones-check label{
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.9rem;
+	font-weight: 400;
+	cursor: pointer;
 }

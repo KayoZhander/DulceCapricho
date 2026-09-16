@@ -6,6 +6,11 @@ const hashPassword = async (password) => {
 
 const USUARIOS = [];
 
+const normalizarRol = (rol) => {
+	const valor = String(rol ?? "cliente").trim().toLowerCase();
+	return valor === "admin" ? "admin" : "cliente";
+};
+
 const _generarId = () => {
 	let idGenerado = 1;
 	const ids = USUARIOS.map(u => u.getId());
@@ -17,21 +22,25 @@ const _generarId = () => {
 
 export class Usuario {
 	#id;
+	#rol;
 	#pnombre;
 	#snombre;
 	#apaterno;
 	#amaterno;
+	#carro;
 	#correo;
 	#telefono;
 	#direccion;
 	#password;
 
-	constructor(id, pnombre, snombre, apaterno, amaterno, correo, telefono, direccion, password = "") {
+	constructor(id, rol, pnombre, snombre, apaterno, amaterno, carro, correo, telefono, direccion, password = "") {
 		this.#id = id ?? _generarId();
+		this.#rol = normalizarRol(rol);
 		this.#pnombre = pnombre.trim().toUpperCase();
 		this.#snombre = snombre.trim().toUpperCase();
 		this.#apaterno = apaterno.trim().toUpperCase();
 		this.#amaterno = amaterno.trim().toUpperCase();
+		this.#carro = carro;
 		this.#correo = correo.trim().toLowerCase();
 		this.#telefono = Number(telefono);
 		this.#direccion = (direccion ?? "").trim();
@@ -39,10 +48,12 @@ export class Usuario {
 	}
 
 	getId() { return this.#id; }
+	getRol() { return this.#rol; }
 	getPnombre() { return this.#pnombre; }
 	getSnombre() { return this.#snombre; }
 	getApaterno() { return this.#apaterno; }
 	getAmaterno() { return this.#amaterno; }
+	getCarro() { return this.#carro; }
 	getCorreo() { return this.#correo; }
 	getTelefono() { return this.#telefono; }
 	getDireccion() { return this.#direccion; }
@@ -52,6 +63,7 @@ export class Usuario {
 	setSnombre(snombre) { this.#snombre = snombre.trim().toUpperCase(); }
 	setApaterno(apaterno) { this.#apaterno = apaterno.trim().toUpperCase(); }
 	setAmaterno(amaterno) { this.#amaterno = amaterno.trim().toUpperCase(); }
+	setCarro(carro) { this.#carro = carro; }
 	setCorreo(correo) { this.#correo = correo.trim().toLowerCase(); }
 	setTelefono(telefono) { this.#telefono = Number(telefono); }
 	setDireccion(direccion) { this.#direccion = direccion.trim(); }
@@ -67,10 +79,12 @@ export class Usuario {
 	static async crear(json) {
 		const usuario = new Usuario(
 			null,
+			json.rol ?? "cliente",
 			json.pnombre,
 			json.snombre,
 			json.apaterno,
 			json.amaterno,
+			json.carro,
 			json.correo,
 			json.telefono,
 			json.direccion
@@ -78,17 +92,39 @@ export class Usuario {
 		await usuario.setPassword(json.password);
 		return usuario;
 	}
+	static async crearAdminSiNoExiste() {
+		const correoAdmin = "admin@dulcecapricho.com";
+		let admin = RegistroUsuarios.obtenerUsuarioPorCorreo(correoAdmin);
+		if (!admin) {
+			admin = await Usuario.crear({
+				rol: "admin",
+				pnombre: "Admin",
+				snombre: "",
+				apaterno: "Sistema",
+				amaterno: "Dulce",
+				carro: [],
+				correo: correoAdmin,
+				telefono: "0000000000",
+				direccion: "Local Dulce Capricho",
+				password: "admin123"
+			});
+			RegistroUsuarios.agregarUsuario(admin);
+		}
+		return admin;
+	}
 	static fromJSON(json) {
-		const { id, pnombre, snombre, apaterno, amaterno, correo, telefono, direccion, password } = json ?? {};
-		return new Usuario(id, pnombre ?? "", snombre ?? "", apaterno ?? "", amaterno ?? "", correo ?? "", telefono ?? null, direccion ?? "", password);
+		const { id, rol, pnombre, snombre, apaterno, amaterno, carro, correo, telefono, direccion, password } = json ?? {};
+		return new Usuario(id, rol ?? "cliente", pnombre ?? "", snombre ?? "", apaterno ?? "", amaterno ?? "", carro ?? [], correo ?? "", telefono ?? null, direccion ?? "", password);
 	}
 	toJSON() {
 		return {
 			id: this.#id,
+			rol: this.#rol,
 			pnombre: this.#pnombre,
 			snombre: this.#snombre,
 			apaterno: this.#apaterno,
 			amaterno: this.#amaterno,
+			carro: this.#carro,
 			correo: this.#correo,
 			telefono: this.#telefono,
 			direccion: this.#direccion,

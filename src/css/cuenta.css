@@ -144,6 +144,14 @@
 	color: #ffffff;
 }
 
+.toggle-password {
+	color: var(--cocoa-soft);
+}
+
+.toggle-password:hover {
+	color: var(--rose);
+}
+
 /* Diseño responsivo */
 @media (max-width: 768px) {
 	.account-grid {

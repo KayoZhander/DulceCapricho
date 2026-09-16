@@ -7,6 +7,19 @@ import { Usuario, RegistroUsuarios } from "./usuarios.mjs";
 
 const botonCerrarSesion = document.querySelector("#cerrar-sesion");
 const botonEliminarCuenta = document.querySelector("#btn-eliminar-cuenta");
+const inputPassword = document.querySelector("#password");
+const btnTogglePassword = document.querySelector("#toggle-password");
+
+btnTogglePassword.addEventListener("click", (event) => {
+	event.preventDefault();
+	if (inputPassword.type === "password") {
+		inputPassword.type = "text";
+		btnTogglePassword.textContent = "Ocultar contraseña";
+	} else {
+		inputPassword.type = "password";
+		btnTogglePassword.textContent = "Mostrar contraseña";
+	}
+});
 
 botonCerrarSesion.addEventListener("click", () => {
 	if (!confirm("¿Seguro qué quieres cerrar sesión?")) {

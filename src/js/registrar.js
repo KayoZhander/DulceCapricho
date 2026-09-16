@@ -1,13 +1,13 @@
-// redireccionar a la pagina cuenta si ya inicío sesión
 if (localStorage.getItem("sesion")) {
-	window.location.href = "/cuenta.html"
+	window.location.href = "/cuenta.html";
 }
 
 import { Usuario, RegistroUsuarios } from "./usuarios.mjs";
 
 const formularioLogin = document.querySelector("#login-form");
+const inputPassword = document.querySelector("#password");
 
-formularioLogin.addEventListener("submit", async (event) => {
+formularioLogin?.addEventListener("submit", async (event) => {
 	event.preventDefault();
 	const valores = Object.fromEntries(new FormData(event.target).entries());
 	const usuario = await Usuario.crear(valores);
@@ -19,6 +19,6 @@ formularioLogin.addEventListener("submit", async (event) => {
 	}
 	RegistroUsuarios.agregarUsuario(usuario);
 
-	localStorage.setItem("sesion", JSON.stringify(usuario));
-	window.location.href = "/index.html";
+	localStorage.setItem("sesion", JSON.stringify(usuario.toJSON()));
+	window.location.href = "/cuenta.html";
 });

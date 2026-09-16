@@ -1,58 +1,33 @@
-/*
-
-<article class="card">
-	<div class="photo-wrap" style="--tone-a:#5C3A2E; --tone-b:#8C5A44;">
-		<img src="" alt="Torta de chocolate">
-		<svg class="photo-icon" viewBox="0 0 120 120" aria-hidden="true">
-		<path d="M40,72 L80,72 L74,50 L46,50 Z" fill="#FFF8EF" opacity="0.85"/>
-		<path d="M46,50 Q60,30 74,50 Q60,40 46,50 Z" fill="#FFF8EF" opacity="0.85"/>
-		<circle cx="60" cy="34" r="3.4" fill="#FFF8EF" opacity="0.85"/>
-		</svg>
-		<svg class="drip" viewBox="0 0 300 22" preserveAspectRatio="none" aria-hidden="true">
-		<path d="M0,0 H300 V6 C280,6 275,20 260,20 C245,20 240,8 225,8 C210,8 205,20 190,20 C175,20 170,8 155,8 C140,8 135,20 120,20 C105,20 100,8 85,8 C70,8 65,20 50,20 C35,20 30,8 15,8 C8,8 4,7 0,6 Z" fill="#FFF8EF"/>
-		</svg>
-	</div>
-	<div class="card-body">
-		<h3>Torta de Chocolate</h3>
-		<p>Bizcocho húmedo con ganache oscuro y un toque de café.</p>
-		<span class="price">$18.000</span>
-	</div>
-</article>
-
-*/
-
-// TODO: al implementar el server, remplazar los datos fijos con un import a catalogo.mjs
-// porque la web no te deja importtar archivos locales por defecto
-import { CatalogoTortas } from "./catalogo.mjs";
+import { CatalogoTortas, Torta } from "./catalogo.mjs";
+import { CarritoDulceCapricho } from "./carroDeCompras.mjs";
 
 const listaTortas = document.querySelector("#tortas");
+const sesion = (() => {
+	try {
+		return JSON.parse(localStorage.getItem("sesion") ?? "null");
+	} catch {
+		return null;
+	}
+})();
+const esAdmin = sesion?.rol === "admin";
 
-CatalogoTortas.listaTortas().forEach((t) => {
-	// crear tarjeta
+function crearTarjetaTorta(t, modoAdmin = false) {
 	const tarjeta = document.createElement("article");
 	tarjeta.classList.add("card");
-	tarjeta.addEventListener("click", () => {
-		const carro = JSON.parse(localStorage.getItem("carro") ?? "[]");
-		carro.push(t);
-		localStorage.setItem("carro", JSON.stringify(carro));
-		alert("Torta agregada");
-	});
+	if (modoAdmin) tarjeta.classList.add("card-admin");
 
-	// fondo
 	const fondoImagen = document.createElement("div");
 	fondoImagen.classList.add("photo-wrap");
 	fondoImagen.style.setProperty("--tone-a", t.getTonoA());
 	fondoImagen.style.setProperty("--tone-b", t.getTonoB());
 
-	// imagen
 	const imagen = document.createElement("img");
-	imagen.src = t.getImagen();
+	imagen.src = t.getImagen() ?? "";
 	imagen.alt = t.getNombre();
+	if (t.getImagen()) {
+		fondoImagen.appendChild(imagen);
+	}
 
-	// agregar imagen al contenedor
-	fondoImagen.appendChild(imagen);
-
-	// cuerpo de la tarjeta
 	const cuerpoTarjeta = document.createElement("div");
 	cuerpoTarjeta.classList.add("card-body");
 
@@ -64,11 +39,142 @@ CatalogoTortas.listaTortas().forEach((t) => {
 
 	const precio = document.createElement("span");
 	precio.classList.add("price");
-	precio.textContent = `\$${t.getPrecio().toLocaleString()}`;
+	precio.textContent = `\$${t.getPrecio().toLocaleString("es-CL")}`;
 
-	cuerpoTarjeta.append(titulo, descripcion, precio);
+	if (modoAdmin) {
+		const acciones = document.createElement("div");
+		acciones.className = "card-actions";
 
-	// agregar elementos a la tarjeta
+		const btnEditar = document.createElement("button");
+		btnEditar.type = "button";
+		btnEditar.className = "btn btn-secondary";
+		btnEditar.textContent = "Editar";
+		btnEditar.addEventListener("click", () => {
+			const form = document.querySelector("#admin-torta-form");
+			if (!form) return;
+			form.querySelector("[name='id']").value = t.getId();
+			form.querySelector("[name='nombre']").value = t.getNombre();
+			form.querySelector("[name='detalle']").value = t.getDetalle();
+			form.querySelector("[name='precio']").value = t.getPrecio();
+			form.querySelector("[name='imagen']").value = t.getImagen() ?? "";
+			form.querySelector("[name='tonoA']").value = t.getTonoA();
+			form.querySelector("[name='tonoB']").value = t.getTonoB();
+			form.scrollIntoView({ behavior: "smooth", block: "start" });
+		});
+
+		const btnEliminar = document.createElement("button");
+		btnEliminar.type = "button";
+		btnEliminar.className = "btn btn-danger";
+		btnEliminar.textContent = "Eliminar";
+		btnEliminar.addEventListener("click", () => {
+			if (!confirm(`¿Deseas eliminar "${t.getNombre()}" del catálogo?`)) return;
+			CatalogoTortas.eliminarTorta(t.getId());
+			renderizarCatalogo();
+		});
+
+		acciones.append(btnEditar, btnEliminar);
+		cuerpoTarjeta.append(titulo, descripcion, precio, acciones);
+	} else {
+		const boton = document.createElement("button");
+		boton.type = "button";
+		boton.className = "btn";
+		boton.textContent = "Agregar al carrito";
+		boton.addEventListener("click", () => {
+			CarritoDulceCapricho.agregar({
+				id: t.getId(),
+				nombre: t.getNombre(),
+				precio: t.getPrecio(),
+				imagen: t.getImagen()
+			}, 1);
+			alert(`${t.getNombre()} se agregó al carrito.`);
+		});
+		cuerpoTarjeta.append(titulo, descripcion, precio, boton);
+	}
+
 	tarjeta.append(fondoImagen, cuerpoTarjeta);
-	listaTortas.appendChild(tarjeta);
-});
+	return tarjeta;
+}
+
+function renderizarCatalogo() {
+	if (!listaTortas) return;
+	listaTortas.innerHTML = "";
+	CatalogoTortas.listaTortas().forEach((t) => {
+		listaTortas.appendChild(crearTarjetaTorta(t, esAdmin));
+	});
+}
+
+function inicializarAdmin() {
+	const contenedor = document.querySelector(".cakes");
+	if (!contenedor || !esAdmin) return;
+
+	const panel = document.createElement("section");
+	panel.className = "admin-panel";
+	panel.innerHTML = `
+		<div class="section-head">
+			<span>Administración</span>
+			<h2>Gestión del catálogo</h2>
+		</div>
+		<form id="admin-torta-form" class="admin-form">
+			<input type="hidden" name="id" value="">
+			<div class="campo">
+				<label>Nombre</label>
+				<input type="text" name="nombre" required>
+			</div>
+			<div class="campo">
+				<label>Detalle</label>
+				<input type="text" name="detalle" required>
+			</div>
+			<div class="campo"><label>Precio</label><input type="number" name="precio" min="0" step="1" required></div>
+			<div class="campo"><label>Imagen</label><input type="text" name="imagen" placeholder="/images/..." required></div>
+			<div class="campo"><label>Tono A</label><input type="color" name="tonoA" value="#5C3A2E"></div>
+			<div class="campo"><label>Tono B</label><input type="color" name="tonoB" value="#8C5A44"></div>
+			<div class="admin-form-actions">
+				<button type="submit" class="btn">Guardar torta</button>
+				<button type="button" id="btn-cancelar-admin" class="btn btn-secondary">Cancelar</button>
+			</div>
+		</form>
+	`;
+
+	const form = panel.querySelector("#admin-torta-form");
+	const cancelar = panel.querySelector("#btn-cancelar-admin");
+	cancelar.addEventListener("click", () => form.reset());
+
+	form.addEventListener("submit", (event) => {
+		event.preventDefault();
+		const datos = Object.fromEntries(new FormData(form).entries());
+		const tortaId = datos.id ? Number(datos.id) : null;
+		const torta = tortaId !== null ? CatalogoTortas.obtenerTorta(tortaId) : null;
+		const nuevaTorta = new Torta(
+			datos.nombre,
+			datos.detalle,
+			Number(datos.precio) || 0,
+			datos.imagen,
+			datos.tonoA,
+			datos.tonoB,
+			torta ? torta.getId() : undefined
+		);
+
+		if (torta) {
+			CatalogoTortas.actualizarTorta(nuevaTorta);
+		} else {
+			CatalogoTortas.agregarTorta(nuevaTorta);
+		}
+
+		form.reset();
+		renderizarCatalogo();
+	});
+
+	const primerBloque = document.querySelector(".cakes");
+	if (primerBloque) {
+		primerBloque.prepend(panel);
+	}
+	const personalizar = document.querySelector(".personalizar");
+	if (personalizar) {
+		personalizar.style.display = "none";
+	}
+}
+
+if (listaTortas) {
+	inicializarAdmin();
+	renderizarCatalogo();
+}

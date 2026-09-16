@@ -101,6 +101,14 @@
 	color: var(--wine);
 }
 
+.toggle-password {
+	color: var(--cocoa-soft);
+}
+
+.toggle-password:hover {
+	color: var(--rose);
+}
+
 @media (max-width: 480px) {
 	.login-card {
 		padding: 1.5rem 1rem;

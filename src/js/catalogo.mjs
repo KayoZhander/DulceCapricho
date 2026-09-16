@@ -21,7 +21,7 @@ export class Torta {
 	#tonoA;
 	#tonoB;
 
-	constructor(id, nombre, detalle, precio, imagen, tonoA, tonoB) {
+	constructor(nombre, detalle, precio, imagen, tonoA, tonoB, id) {
 		this.#id = id ?? _generarId();
 		this.#nombre = nombre;
 		this.#detalle = detalle;
@@ -48,7 +48,7 @@ export class Torta {
 
 	static fromJSON(json) {
 		const { id, nombre, detalle, precio, imagen, tonoA, tonoB } = json ?? {};
-		return new Torta(id, nombre ?? "", detalle ?? "", precio ?? 0, imagen ?? null, tonoA ?? "", tonoB ?? "");
+		return new Torta(nombre ?? "", detalle ?? "", precio ?? 0, imagen ?? null, tonoA ?? "", tonoB ?? "", id);
 	}
 	toJSON() {
 		return {
@@ -116,11 +116,10 @@ export class CatalogoTortas {
 		console.warn(`actualizarTorta(): no se encontro ninguna torta con el id ${torta.getId()}`);
 	}
 	static eliminarTorta(torta) {
-		if (!(torta instanceof Torta || torta instanceof Number)) {
+		if (!(torta instanceof Torta || typeof torta === "number")) {
 			console.warn("eliminarTorta(): parametro 'torta' tiene que ser de tipo 'Torta', objeto o numero");
 			return;
 		}
-		// usando .? en caso si el argumento 'torta' es un numero
 		const objetivo = torta instanceof Torta ? torta.getId() : torta;
 		for (let i = 0; i < TORTAS.length; i++) {
 			const t = TORTAS[i];
@@ -129,8 +128,8 @@ export class CatalogoTortas {
 				localStorage.setItem("tortas", JSON.stringify(TORTAS));
 				return;
 			}
-			console.warn(`eliminarTorta(): no se encontro ninguna torta con el id ${objetivo}`);
 		}
+		console.warn(`eliminarTorta(): no se encontro ninguna torta con el id ${objetivo}`);
 	}
 	static idExiste(id) {
 		if (typeof id !== "number") {
@@ -152,7 +151,7 @@ if (CatalogoTortas.cantidad == 0) {
 		"Torta de Chocolate",
 		"Bizcocho húmedo con ganache oscuro y un toque de café.",
 		18000,
-		null,
+		"/images/bizcocho-cafe.webp",
 		"#5C3A2E",
 		"#8C5A44",
 	));
@@ -160,7 +159,7 @@ if (CatalogoTortas.cantidad == 0) {
 		"Torta de Frutilla",
 		"Crema suave con frutillas frescas y bizcocho de vainilla.",
 		22000,
-		null,
+		"images/torta-frutilla.jpg",
 		"#B34A4A",
 		"#D97A7A",
 	));
@@ -168,15 +167,15 @@ if (CatalogoTortas.cantidad == 0) {
 		"Torta de Limón",
 		"Merengue italiano y relleno de crema de limón con base crujiente.",
 		20000,
-		null,
+		"images/torta-limon.jpg",
 		"#C2B13B",
 		"#E8D44D",
 	));
 	CatalogoTortas.agregarTorta(new Torta(
 		"Torta de Blueberry",
-		"sjdfkjasl",
-		99999,
-		null,
+		"Bizcocho esponjoso con relleno de crema y arándanos frescos.",
+		25000,
+		"images/torta-blueberry.png",
 		"#1e3f97",
 		"#6f41d8"
 	));

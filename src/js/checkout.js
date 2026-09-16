@@ -1,5 +1,7 @@
+import { CarritoDulceCapricho } from "./carroDeCompras.mjs";
+
 document.addEventListener('DOMContentLoaded', () => {
-    const carrito = JSON.parse(localStorage.getItem('carrito_dulce_capricho')) || [];
+    const carrito = CarritoDulceCapricho.items;
     const resumenItems = document.getElementById('resumen-items');
     const resumenTotal = document.getElementById('resumen-total-precio');
     const form = document.getElementById('checkout-form');
@@ -10,12 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoTransferencia = document.getElementById('info-transferencia');
     const inputFecha = document.getElementById('fecha-entrega');
 
-    // Restringir fechas pasadas
     const hoy = new Date().toISOString().split('T')[0];
     if (inputFecha) inputFecha.min = hoy;
 
-    // Toggle para campo de dirección según tipo de entrega
-    selectEntrega.addEventListener('change', (e) => {
+    selectEntrega?.addEventListener('change', (e) => {
         if (e.target.value === 'despacho') {
             seccionDireccion.style.display = 'block';
             inputDireccion.setAttribute('required', 'true');
@@ -25,21 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Toggle información para transferencia bancaria
     radiosPago.forEach(radio => {
         radio.addEventListener('change', (e) => {
             infoTransferencia.style.display = e.target.value === 'transferencia' ? 'block' : 'none';
         });
     });
 
-    // Renderizar resumen de la compra
     if (carrito.length === 0) {
         resumenItems.innerHTML = '<li>El carrito está vacío.</li>';
         resumenTotal.innerText = '$0';
     } else {
         resumenItems.innerHTML = carrito.map(item => {
-            const cantidad = item.cantidad || 1;
-            const subtotal = item.precio * cantidad;
+            const cantidad = Number(item.cantidad) || 1;
+            const subtotal = (Number(item.precio) || 0) * cantidad;
             return `
                 <li>
                     <span>${item.nombre} (x${cantidad})</span>
@@ -48,11 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }).join('');
 
-        const total = carrito.reduce((acc, item) => acc + (item.precio * (item.cantidad || 1)), 0);
+        const total = carrito.reduce((acc, item) => acc + ((Number(item.precio) || 0) * (Number(item.cantidad) || 1)), 0);
         resumenTotal.innerText = `$${total.toLocaleString('es-CL')}`;
     }
 
-    // Procesar formulario
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -61,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const cliente = document.getElementById('nombre').value;
+        const cliente = document.getElementById('nombre').value.trim();
         const fecha = inputFecha.value;
         const hora = document.getElementById('hora-entrega').value;
         const metodo = document.querySelector('input[name="pago"]:checked').value;
@@ -73,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         alert(`¡Pedido Confirmado! \n\nGracias por tu compra, ${cliente}.\nModalidad: ${tipoEntrega}\nFecha programada: ${fecha} (${hora})\n\n${mensajeMetodo}`);
 
-        localStorage.removeItem('carrito_dulce_capricho');
+        CarritoDulceCapricho.vaciar();
         window.location.href = '/index.html';
     });
 });
