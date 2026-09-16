@@ -6,6 +6,16 @@ const resumenCant = document.querySelector("#resumen-cant-items");
 const resumenSubtotal = document.querySelector("#resumen-subtotal");
 const resumenTotal = document.querySelector("#resumen-total");
 const btnVaciarCarrito = document.querySelector("#btn-vaciar-carrito");
+const btnProcederPago = document.querySelector("#btn-proceder-pago");
+
+btnProcederPago.addEventListener("click", (event) => {
+	event.preventDefault();
+	if (CarritoDulceCapricho.items.length === 0) {
+		alert("No puedes proceder al pago si tu carro esta vacio.");
+		return;
+	}
+	window.location.href = "checkout.html";
+});
 
 const formatearPrecio = (valor) => `$${Number(valor || 0).toLocaleString("es-CL")}`;
 
