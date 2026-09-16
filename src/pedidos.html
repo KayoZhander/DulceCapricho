@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulce Capricho – Mis Pedidos</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pedidos.css">
+</head>
+
+<body>
+    <main class="pedidos-page">
+        <section class="pedidos-header">
+            <div>
+                <span class="eyebrow">Mi historial</span>
+                <h1>Mis pedidos</h1>
+            </div>
+            <a href="/cuenta.html" class="btn btn-secondary">Volver a mi cuenta</a>
+        </section>
+
+        <section class="pedidos-toolbar alt-bg">
+            <div class="toolbar-group">
+                <label for="filtro-estado">Filtrar por estado</label>
+                <select id="filtro-estado">
+                    <option value="todos">Todos</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="confirmado">Confirmado</option>
+                    <option value="en preparación">En preparación</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="entregado">Entregado</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="pedidos-lista" class="pedidos-lista" aria-live="polite"></section>
+    </main>
+
+    <script type="module" src="/js/pedidos.js"></script>
+    <script type="module" src="/js/headerYFooter.js"></script>
+</body>
+
+</html>

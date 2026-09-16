@@ -1,3 +1,5 @@
+import { CarritoDulceCapricho } from "./carroDeCompras.mjs";
+
 const navItems = [
 	{
 		id: "pagina-inicio",
@@ -18,6 +20,11 @@ const navItems = [
 		id: "pagina-carrito",
 		html: "/carrito.html",
 		texto: "Mi carro"
+	},
+	{
+		id: "pagina-pedidos",
+		html: "/pedidos.html",
+		texto: "Pedidos"
 	},
 	{
 		id: "pagina-cuenta",
@@ -66,7 +73,17 @@ document.addEventListener("DOMContentLoaded", () => {
 		const li = document.createElement("li");
 		const a = document.createElement("a");
 		a.id = item.id;
-		if (a.id === "pagina-cuenta" && localStorage.getItem("sesion")) {
+		if (a.id === "pagina-carrito") {
+			const itemsEnCarro = CarritoDulceCapricho.items.length;
+			if (itemsEnCarro != 0) {
+				a.textContent = `${item.texto} (${itemsEnCarro})`;
+			} else {
+				a.textContent = item.texto
+			}
+			a.addEventListener("click", () => {
+				redireccionarOMoverArriba(item.html);
+			});
+		} else if (a.id === "pagina-cuenta" && localStorage.getItem("sesion")) {
 			a.textContent = item.texto2;
 			a.addEventListener("click", () => {
 				redireccionarOMoverArriba(item.html2);
