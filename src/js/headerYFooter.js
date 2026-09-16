@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Logo image
 	const logo = document.createElement("img");
-	logo.src = "/images/logo.webp";
+	logo.src = "/images/logo.png";
 	logo.width = 64;
 	logo.height = 64;
 
