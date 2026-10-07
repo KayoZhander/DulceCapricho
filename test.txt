@@ -1,0 +1,44 @@
+react-dom_client.js?v=6b6e460d:15805 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+react-router.js?v=6b6e460d:7358 Uncaught TypeError: Cannot destructure property 'basename' of 'import_react.useContext(...)' as it is null.
+    at LinkWithRef (react-router.js?v=6b6e460d:7358:8)
+    at Object.react_stack_bottom_frame (react-dom_client.js?v=6b6e460d:14142:12)
+    at renderWithHooks (react-dom_client.js?v=6b6e460d:4400:19)
+    at updateForwardRef (react-dom_client.js?v=6b6e460d:5597:16)
+    at beginWork (react-dom_client.js?v=6b6e460d:6455:21)
+    at runWithFiberInDEV (react-dom_client.js?v=6b6e460d:944:66)
+    at performUnitOfWork (react-dom_client.js?v=6b6e460d:9148:92)
+    at workLoopSync (react-dom_client.js?v=6b6e460d:9044:37)
+    at renderRootSync (react-dom_client.js?v=6b6e460d:9028:6)
+    at performWorkOnRoot (react-dom_client.js?v=6b6e460d:8715:27)
+LinkWithRef @ react-router.js?v=6b6e460d:7358
+react_stack_bottom_frame @ react-dom_client.js?v=6b6e460d:14142
+renderWithHooks @ react-dom_client.js?v=6b6e460d:4400
+updateForwardRef @ react-dom_client.js?v=6b6e460d:5597
+beginWork @ react-dom_client.js?v=6b6e460d:6455
+runWithFiberInDEV @ react-dom_client.js?v=6b6e460d:944
+performUnitOfWork @ react-dom_client.js?v=6b6e460d:9148
+workLoopSync @ react-dom_client.js?v=6b6e460d:9044
+renderRootSync @ react-dom_client.js?v=6b6e460d:9028
+performWorkOnRoot @ react-dom_client.js?v=6b6e460d:8715
+performWorkOnRootViaSchedulerTask @ react-dom_client.js?v=6b6e460d:9834
+performWorkUntilDeadline @ react-dom_client.js?v=6b6e460d:36
+react-dom_client.js?v=6b6e460d:5451 An error occurred in the <Link> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+defaultOnUncaughtError @ react-dom_client.js?v=6b6e460d:5451
+logUncaughtError @ react-dom_client.js?v=6b6e460d:5480
+runWithFiberInDEV @ react-dom_client.js?v=6b6e460d:944
+lane.callback @ react-dom_client.js?v=6b6e460d:5508
+callCallback @ react-dom_client.js?v=6b6e460d:4273
+commitCallbacks @ react-dom_client.js?v=6b6e460d:4281
+runWithFiberInDEV @ react-dom_client.js?v=6b6e460d:944
+commitLayoutEffectOnFiber @ react-dom_client.js?v=6b6e460d:7520
+flushLayoutEffects @ react-dom_client.js?v=6b6e460d:9444
+commitRoot @ react-dom_client.js?v=6b6e460d:9334
+completeRoot @ react-dom_client.js?v=6b6e460d:9299
+completeRootWhenReady @ react-dom_client.js?v=6b6e460d:8800
+performWorkOnRoot @ react-dom_client.js?v=6b6e460d:8772
+performWorkOnRootViaSchedulerTask @ react-dom_client.js?v=6b6e460d:9834
+performWorkUntilDeadline @ react-dom_client.js?v=6b6e460d:36

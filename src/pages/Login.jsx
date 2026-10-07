@@ -2,11 +2,12 @@ import { useContext } from "react";
 import { UsuarioContext } from "../contexts/AuthContext";
 
 export default function Login() {
-	const { login } = useContext(UsuarioContext);
+	const login = useContext(UsuarioContext);
 
-	function botonLogin(event) {
-		event.preventDefault();
-		console.log(event);
+	function botonLogin(e) {
+		e.preventDefault();
+		// const data = GetFormData(e);
+		console.log(e.target.value);
 	}
 
 	return (<>

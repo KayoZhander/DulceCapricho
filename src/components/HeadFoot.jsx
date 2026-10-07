@@ -1,12 +1,13 @@
-import { Link } from "react-router"
+import { Link } from "react-router-dom";
 
 export function Header() {
 	return (<>
 		<header>
-			<strong>Dulce Capricho</strong>
+			<strong className="brand-name">Dulce Capricho</strong>
 			<nav aria-label="Menu">
 				<Link to="/">Inicio</Link>
 				<Link to="/tortas">Tortas</Link>
+				<Link to="/login">Iniciar sesión</Link>
 			</nav>
 		</header>
 	</>);
@@ -15,7 +16,9 @@ export function Header() {
 export function Footer() {
 	return (<>
 		<footer>
-			<h3>Texto footer</h3>
+			<span className="ribbon">
+				Hecho a mano, con cariño.
+			</span>
 		</footer>
 	</>);
 }
