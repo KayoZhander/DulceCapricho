@@ -72,7 +72,7 @@ nav {
 	list-style: none;
 }
 
-nav Link {
+nav a {
 	font-size: 0.9rem;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
@@ -81,7 +81,7 @@ nav Link {
 	cursor: pointer;
 }
 
-nav Link:hover, nav Link:focus-visible {
+nav a:hover, nav a:focus-visible {
 	color: var(--wine);
 }
 
@@ -234,7 +234,7 @@ nav Link:hover, nav Link:focus-visible {
 	display: block;
 }
 
-/* ---------- CAKES SECTION ---------- */
+/* sección de tortas */
 
 .cakes {
 	padding: clamp(50px, 8vw, 90px) clamp(20px, 6vw, 80px) clamp(80px, 10vw, 120px);

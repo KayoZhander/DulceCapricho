@@ -25,9 +25,7 @@ export default function Login() {
 
 	function mostrarPassword(e) {
 		e.preventDefault();
-		// no tocar >:(
-		const inputPassword = [...e.target.parentElement.children].filter((x) => x.id === "password")[0];
-
+		const inputPassword = e.target.parentElement.querySelector("#password");
 		if (inputPassword.type === "password") {
 			e.target.textContent = "Ocultar contraseña";
 			inputPassword.type = "text";
@@ -46,7 +44,6 @@ export default function Login() {
 		}
 		const posInicio = e.target.selectionStart - 1;
 		const posFin = e.target.selectionEnd - 1;
-		console.log(posInicio, posFin);
 		e.target.value = e.target.value.replace(espacioRegex, "");
 		e.target.selectionStart = posInicio;
 		e.target.selectionEnd = posFin;
@@ -62,7 +59,7 @@ export default function Login() {
 					</div>
 					<div className="form-group">
 						<label for="password">Contraseña</label>
-						<input id="password" name="password" type="password" placeholder="Contraseña" onInput={(e) => eliminarEspaciosPassword(e)}></input>
+						<input id="password" name="password" type="password" placeholder="Contraseña" onInput={eliminarEspaciosPassword}></input>
 						<Link to="#" onClick={mostrarPassword}>Mostrar contraseña</Link>
 					</div>
 					<button type="submit" className="login-btn">Iniciar sesión</button>
