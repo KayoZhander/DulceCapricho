@@ -1,74 +1,114 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UsuarioContext } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { validarFormatoCorreo } from "../utils/Validacion.mjs";
+import CuadroInput from "../components/CuadroInput";
+import PasswordInput from "../components/PasswordInput";
+import Usuario from "../model/Usuario.mjs";
+import Boton from "../components/Botones";
+import Tarjeta from "../components/Tarjeta";
 import "../styles/login.css";
 
 /*
-
 puede preguntar sobre las pruebas unitarias
 si vamos a mostrar una prueba, hay que estar preparado para ejecutarlo
-
 */
 
 export default function Login() {
-	const login = useContext(UsuarioContext);
+	let navigate = useNavigate();
+
+	const { usuario, login, logout, borrarCuenta } = useContext(UsuarioContext);
 	const [correo, setCorreo] = useState("");
 	const [password, setPassword] = useState("");
 
-	function botonLogin(e) {
+	const [errorCorreo, setErrorCorreo] = useState(null);
+	const [errorPassword, setErrorPassword] = useState(null);
+
+	useEffect(() => {
+		if (usuario)
+			navigate("/cuenta");
+	}, [usuario, navigate]);
+
+	async function botonLogin(e) {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
 		const datosLogin = Object.fromEntries(formData.entries());
-		console.log(datosLogin);
-	}
 
-	function mostrarPassword(e) {
-		e.preventDefault();
-		const inputPassword = e.target.parentElement.querySelector("#password");
-		if (inputPassword.type === "password") {
-			e.target.textContent = "Ocultar contraseña";
-			inputPassword.type = "text";
-		} else {
-			e.target.textContent = "Mostrar contraseña";
-			inputPassword.type = "password";
-		}
-	}
+		const correoVacio = !datosLogin.email.trim();
+		const passwordVacio = !datosLogin.password;
+		const passwordMuyCorto = datosLogin.password.length < 8;
 
-	const espacioRegex = /[^\w\p{P}\p{S}]+/gu;
-
-	function eliminarEspaciosPassword(e) {
-		if (!espacioRegex.test(e.target.value)) {
-			setPassword(e.target.value);
+		if (correoVacio || passwordVacio || passwordMuyCorto) {
+			if (correoVacio)
+				setErrorCorreo("Este campo es obligatorio.");
+			if (passwordVacio)
+				setErrorPassword("Este campo es obligatorio.");
+			else if (passwordMuyCorto)
+				setErrorPassword("Debe tener al menos 8 caracteres.");
 			return;
 		}
-		const posInicio = e.target.selectionStart - 1;
-		const posFin = e.target.selectionEnd - 1;
-		e.target.value = e.target.value.replace(espacioRegex, "");
-		e.target.selectionStart = posInicio;
-		e.target.selectionEnd = posFin;
+
+		if (!Usuario.contieneCorreo(datosLogin.email)) {
+			setErrorCorreo("Correo incorrecto.");
+		} else {
+			setErrorCorreo("");
+			if (!await login(datosLogin)) {
+				setErrorPassword("Contraseña incorrecta.");
+				return;
+			}
+			setErrorPassword("");
+			navigate("/cuenta");
+		}
 	}
+
+	function onMostrarPassword(e) {
+		e.preventDefault();
+	}
+
+	const validacionesCorreo = [
+		[(v) => {
+			return validarFormatoCorreo(v);
+		}, "El correo no es valido."]
+	];
+
+	const validacionesPassword = [
+		[(v) => {
+			return v.length >= 8;
+		}, "Debe tener al menos 8 caracteres."]
+	];
 
 	return (<>
 		<section className="login-section">
-			<div className="login-card">
+			<h1>Bienvenido</h1>
+			<Tarjeta className="login-card">
 				<form id="login-form" onSubmit={botonLogin}>
-					<div className="form-group">
-						<label for="email">Correo</label>
-						<input id="email" name="email" type="email" placeholder="correo@gmail.com" onInput={(e) => setCorreo(e.target.value)}></input>
-					</div>
-					<div className="form-group">
-						<label for="password">Contraseña</label>
-						<input id="password" name="password" type="password" placeholder="Contraseña" onInput={eliminarEspaciosPassword}></input>
-						<Link to="#" onClick={mostrarPassword}>Mostrar contraseña</Link>
-					</div>
-					<button type="submit" className="login-btn">Iniciar sesión</button>
+					<CuadroInput
+						required
+						nameId="email"
+						label="Correo"
+						placeholder="correo@gmail.com"
+						onInput={(e) => setCorreo(e.target.value)}
+						validaciones={validacionesCorreo}
+
+						error={errorCorreo}
+						setError={setErrorCorreo}
+					/>
+					<PasswordInput
+						required
+						nameId="password"
+						label="Contraseña"
+						placeholder="Contraseña"
+						validaciones={validacionesPassword}
+						error={errorPassword}
+						setError={setErrorPassword}
+					/>
+					<Boton type="submit" style={{ width: "100%", marginTop: "0.8rem" }}>Iniciar sesión</Boton>
 				</form>
 				<div className="login-links">
 					<Link to="/registrar">Crear cuenta</Link>
 					<Link to="/recuperar">¿Olvidaste la contraseña?</Link>
 				</div>
-			</div>
+			</Tarjeta>
 		</section>
 	</>);
 }

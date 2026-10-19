@@ -1,49 +1,20 @@
-@import url("./tipografias.css");
-
 .error-section {
 	display: flex;
 	justify-content: center;
-    text-align: center;
-	align-items: center;
+	text-align: center;
 	width: 100%;
-    min-height: 77dvh;
+	min-height: 77dvh;
 	padding: 2rem 1rem;
 }
 
-.error-btn {
-	width: 100%;
-	padding: 0.9rem;
-	border: none;
-	border-radius: 999px;
-	background: var(--rose);
-	color: var(--wine);
-	font-family: "Work Sans", sans-serif;
-	font-weight: 600;
-	font-size: 1rem;
-	cursor: pointer;
-	transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-	margin-top: 1.5rem;
-}
-
-.error-btn:hover {
-	background: var(--gold);
-	transform: translateY(-2px);
-}
-
-.home-btn {
-	background: var(--wine);
-	color: var(--rose);
-}
-
-.home-btn:hover {
-	background: var(--gold);
-	color: var(--wine);
-	transform: translateY(-2px);
+.error-section div {
+	align-content: center;
+	align-items: center;
 }
 
 .actions {
-    display: flex;
-    flex-direction: row;
-    width: 28rem;
-    gap: 1rem;
+	display: flex;
+	flex-direction: row;
+	width: 28rem;
+	gap: 1rem;
 }

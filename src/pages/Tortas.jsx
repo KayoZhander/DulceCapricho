@@ -1,141 +1,142 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import Torta from "../model/Torta.mjs";
+import TortaItem from "../components/TortaItem";
+import Titulo from "../components/Titulo";
+import PopupEditarTorta from "../components/PopupEditarTorta";
+import { UsuarioContext } from "../contexts/AuthContext";
+import Usuario from "../model/Usuario.mjs";
 import "../styles/tortas.css";
 
-const CATALOGO_TORTAS = [
-	{
-		id: 1,
-		nombre: "Torta Blueberry",
-		categoria: "Frutales",
-		precio: 15000,
-		imagen: "/images/torta-blueberry.png",
-		descripcion: "Deliciosa torta con relleno de arándanos frescos y crema suave de la casa."
-	},
-	{
-		id: 2,
-		nombre: "Torta Bizcocho Café",
-		categoria: "Especiales",
-		precio: 18000,
-		imagen: "/images/bizcocho-cafe.webp",
-		descripcion: "Esponjoso bizcocho de café artesanal con suave crema estilo tiramisú."
-	},
-	{
-		id: 3,
-		nombre: "Mini Pastel Capricho",
-		categoria: "Individuales",
-		precio: 8000,
-		imagen: "/images/minipastel.jpg",
-		descripcion: "Ideal para regalar o disfrutar un capricho personal en cualquier momento."
-	}
-];
+function formularioBase() {
+	return {
+		nombre: "",
+		descripcion: "",
+		precio: 0,
+		imagen: "",
+		categoria: Torta.Categoria.Frutales,
+	};
+}
 
 export default function Tortas() {
+	const { usuario } = useContext(UsuarioContext);
 	const [categoria, setCategoria] = useState("Todas");
-	const [carrito, setCarrito] = useState([]);
+	const [editorOpen, setEditorOpen] = useState(false);
+	const [form, setForm] = useState(formularioBase());
+	const [errors, setErrors] = useState({});
 
-	const categorias = ["Todas", "Frutales", "Especiales", "Individuales"];
+	Torta.cargarCatalogo();
 
 	const tortasFiltradas = categoria === "Todas"
-		? CATALOGO_TORTAS
-		: CATALOGO_TORTAS.filter(torta => torta.categoria === categoria);
+		? Torta.tortas
+		: Torta.tortas.filter(t => t.categoria === categoria);
 
-	const agregarAlCarrito = (producto) => {
-		setCarrito(prev => [...prev, producto]);
-		alert(`¡${producto.nombre} agregado al carrito!`);
-	};
+	const esAdmin = usuario && usuario.rol === Usuario.Rol.Admin;
+
+	function validarFormulario() {
+		const errores = {};
+		if (!String(form.nombre ?? "").trim()) errores.nombre = "El nombre es obligatorio.";
+		if (!String(form.descripcion ?? "").trim()) errores.descripcion = "La descripción es obligatoria.";
+		if (!String(form.imagen ?? "").trim()) errores.imagen = "La imagen es obligatoria.";
+		if (Number(form.precio ?? 0) <= 0) errores.precio = "El precio debe ser mayor a 0.";
+		if (!Torta.Categoria.listaCategorias.includes(form.categoria)) errores.categoria = "Selecciona una categoría válida.";
+		return errores;
+	}
+
+	function abrirCrearTorta() {
+		setForm(formularioBase());
+		setErrors({});
+		setEditorOpen(true);
+	}
+
+	function cerrarEditor() {
+		setEditorOpen(false);
+		setErrors({});
+		setForm(formularioBase());
+	}
+
+	function guardarCambios() {
+		const erroresNuevos = validarFormulario();
+		setErrors(erroresNuevos);
+		if (Object.keys(erroresNuevos).length > 0)
+			return;
+
+		const datos = {
+			nombre: String(form.nombre ?? "").trim(),
+			descripcion: String(form.descripcion ?? "").trim(),
+			precio: Number(form.precio ?? 0),
+			imagen: String(form.imagen ?? "").trim(),
+			categoria: form.categoria,
+		};
+
+		const nuevaTorta = new Torta(datos);
+		nuevaTorta.agregar();
+		Torta.cargarCatalogo();
+		cerrarEditor();
+		window.location.reload();
+	}
 
 	return (
-		<div className="pedidos-page">
-			<header className="pedidos-header">
-				<div>
-					<h1>Nuestras Tortas</h1>
-					<p style={{ color: "var(--cocoa-soft)", marginTop: "6px" }}>
-						Catálogo exclusivo de repostería artesanal Dulce Capricho
-					</p>
-				</div>
-			</header>
+		<div className="page-padding" style={{ paddingBottom: "2rem" }}>
+			<Titulo titulo="Nuestras Tortas" subtitulo="Catálogo exclusivo de repostería artesanal Dulce Capricho" />
 
-			{/* Barra de Filtros */}
 			<div className="pedidos-toolbar">
 				<div className="toolbar-group">
 					<label>Categoría:</label>
-					{categorias.map(cat => (
+					{["Todas", ...Torta.Categoria.listaCategorias].map(cat => (
 						<button
 							key={cat}
-							className={`btn-secondary ${categoria === cat ? "btn-activo" : ""}`}
+							className={categoria === cat ? "btn" : "light-btn"}
 							style={{
+								fontSize: "0.9rem",
+								fontWeight: 600,
 								padding: "8px 16px",
 								borderRadius: "20px",
-								cursor: "pointer",
-								fontWeight: categoria === cat ? "700" : "500",
-								background: categoria === cat ? "var(--rose)" : "transparent",
-								color: categoria === cat ? "#fff" : "var(--wine)",
-								borderColor: categoria === cat ? "var(--rose)" : "rgba(58, 35, 24, 0.22)"
+								cursor: "pointer"
 							}}
 							onClick={() => setCategoria(cat)}
-						>
-							{cat}
-						</button>
+						>{cat}</button>
 					))}
 				</div>
+
+				{esAdmin && (
+					<button
+						type="button"
+						className="btn"
+						style={{
+							marginTop: "0.6rem",
+							fontSize: "0.9rem",
+							fontWeight: 600,
+							padding: "8px 16px",
+							borderRadius: "20px",
+							cursor: "pointer"
+						}}
+						onClick={abrirCrearTorta}
+					>
+						Añadir torta
+					</button>
+				)}
 			</div>
 
-			{/* Lista de Tortas */}
 			<section style={{
 				display: "grid",
 				gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
 				gap: "24px"
 			}}>
-				{tortasFiltradas.map(torta => (
-					<article key={torta.id} className="pedido-card" style={{ display: "flex", flexDirection: "column" }}>
-						<div style={{
-							width: "100%",
-							height: "200px",
-							borderRadius: "12px",
-							overflow: "hidden",
-							marginBottom: "14px",
-							background: "var(--cream)"
-						}}>
-							<img
-								src={torta.imagen}
-								alt={torta.nombre}
-								style={{ width: "100%", height: "100%", objectFit: "cover" }}
-							/>
-						</div>
-
-						<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-							<span className="estado-badge estado-en-preparacion">{torta.categoria}</span>
-							<span style={{ fontFamily: "Fraunces, serif", fontWeight: "700", color: "var(--wine)", fontSize: "1.2rem" }}>
-								${torta.precio.toLocaleString("es-CL")}
-							</span>
-						</div>
-
-						<h2 style={{ fontFamily: "Fraunces, serif", color: "var(--wine)", fontSize: "1.25rem", marginBottom: "8px" }}>
-							{torta.nombre}
-						</h2>
-
-						<p style={{ color: "var(--cocoa-soft)", fontSize: "0.9rem", flexGrow: 1, marginBottom: "16px" }}>
-							{torta.descripcion}
-						</p>
-
-						<button
-							className="btn-secondary"
-							style={{
-								width: "100%",
-								padding: "10px",
-								borderRadius: "10px",
-								fontWeight: "600",
-								cursor: "pointer",
-								background: "var(--wine)",
-								color: "#fff",
-								border: "none"
-							}}
-							onClick={() => agregarAlCarrito(torta)}
-						>
-							Añadir al Carrito
-						</button>
-					</article>
-				))}
+				{tortasFiltradas.map(torta => <TortaItem torta={torta} key={torta.id} />)}
 			</section>
+
+			<PopupEditarTorta
+				open={editorOpen}
+				form={form}
+				errors={errors}
+				isNew={true}
+				setForm={setForm}
+				setErrors={setErrors}
+				onClose={cerrarEditor}
+				onSave={guardarCambios}
+				onDelete={() => { }}
+				onReset={() => setForm(formularioBase())}
+			/>
 		</div>
 	);
 }
