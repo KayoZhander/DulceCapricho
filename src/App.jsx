@@ -8,6 +8,7 @@ import Recuperar from "./pages/Recuperar.jsx";
 import Registrar from "./pages/Registrar.jsx";
 import Cuenta from "./pages/Cuenta.jsx";
 import Carrito from "./pages/Carrito.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import Contacto from "./pages/Contacto.jsx";
 import Pedidos from "./pages/Pedidos.jsx";
 import EditarCuenta from "./pages/EditarCuenta.jsx";
@@ -24,6 +25,7 @@ export default function App() {
 				<Route path="/contacto" element={<Contacto />} />
 				<Route path="/pedidos" element={<Pedidos />} />
 				<Route path="/carro" element={<Carrito />} />
+				<Route path="/checkout" element={<Checkout />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/registrar" element={<Registrar />} />
 				<Route path="/recuperar" element={<Recuperar />} />

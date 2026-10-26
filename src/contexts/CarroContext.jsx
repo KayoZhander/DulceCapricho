@@ -89,7 +89,8 @@ export const CarroContext = createContext({
 	quitarItem: () => { },
 	incrementarItem: () => { },
 	disminuirItem: () => { },
-	vaciarCarrito: () => { }
+	vaciarCarrito: () => { },
+	limpiarCarrito: () => { },
 });
 
 export function CarroProvider({ children }) {
@@ -149,8 +150,12 @@ export function CarroProvider({ children }) {
 		});
 	}
 
+		function limpiarCarrito() {
+		dispatch({ type: "VACIAR" });
+	}
+
 	return (
-		<CarroContext.Provider value={{ carro, agregarItem, quitarItem, incrementarItem, disminuirItem, vaciarCarrito }}>
+		<CarroContext.Provider value={{ carro, agregarItem, quitarItem, incrementarItem, disminuirItem, vaciarCarrito, limpiarCarrito }}>
 			{children}
 			{confirmState && (
 				<PopupConfirmar

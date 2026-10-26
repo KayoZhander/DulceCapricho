@@ -54,7 +54,7 @@ export default function Carrito() {
 						<Boton
 							disabled={carro.items.length === 0}
 							type="button"
-							onClick={() => { }}
+							onClick={() => navigate("/checkout")}
 						>Ir a pagar</Boton>
 						<BotonClaro
 							disabled={carro.items.length === 0}
