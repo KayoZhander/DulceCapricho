@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "Work Sans";
+    src: url("../fonts/WorkSans.ttf") format("woff");
+}
+
+@font-face {
+    font-family: "Space Mono";
+    src: url("../fonts/SpaceMono.ttf") format("woff");
+}
+
+@font-face {
+    font-family: "Fraunces";
+    src: url("../fonts/Fraunces.ttf") format("woff");
+}
+
+@font-face {
+    font-family: "Fraunces Italic";
+    src: url("../fonts/FrauncesItalic.ttf") format("woff");
+}
